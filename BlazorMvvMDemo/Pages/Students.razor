@@ -1,0 +1,65 @@
+﻿@page "/students"
+
+<PageTitle>Students Manager with MVVM</PageTitle>
+
+@if (viewModels.AllSudents == null)
+{
+	<p><em>Loading...</em></p>
+}
+else
+{
+  <EditForm Model="viewModels.CurrentStudent" OnSubmit="AddStudent" class="card card-body bg-light mt-5">
+    <div class="form-group row">
+        <label for="name" class="col-md-2 col-form-label">Name:</label>
+        <div class="col-md-10">
+			  <InputText id="name" class="form-control" @bind-Value="viewModels.CurrentStudent.Name" />
+            <input  id="Id" type = hidden class="form-control"  value="@viewModels.CurrentStudent.Id" />
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <button type="submit" class="btn btn-success">Create</button>
+        </div>
+    </div>
+
+</EditForm>
+
+<div>
+    <table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Name</th>
+				<th></th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var student in viewModels.AllSudents)
+			{
+				<tr>
+					<td>@student.Id</td>
+					<td>@student.Name</td>
+					<td> <button class="btn btn-info">Edit</button> </td>
+					<td><button class="btn btn-danger">Delete</button></td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
+	
+}
+
+@code {
+
+	 
+
+	StudentViewModels viewModels = new StudentViewModels();
+
+
+	void AddStudent()
+	{
+		viewModels.SaveStudent();
+	}
+}
